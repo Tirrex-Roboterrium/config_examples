@@ -50,13 +50,13 @@ lateral_control:
 
   front_rear_decoupled:
     gains:
-      front_kp: 0.2
-      rear_kp: 0.2
+      front_kp: 0.3
+      rear_kp: 0.3
 
 sliding_observer:
-  selected: none
+  # selected: none
   # selected: extended_cinematic
-  # selected: extended_lyapunov
+  selected: extended_lyapunov
 
   extended_cinematic:
     gains:

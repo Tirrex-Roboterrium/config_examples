@@ -1,10 +1,18 @@
 x-yaml-anchors:  # create anchors "&something" that can be referenced using "*something"
   base: &base
     extends:
+      # TODO: adapt this path if you copy this config
       file: ../../../docker/${TIRREX_IMAGE_TAG}.yaml
-      service: x11_robot
+      service: x11_base
     volumes:
       - ./config:/config
+    environment:
+      - CONFIG_DIR=/config
+      - ROBOT_CONFIG_DIR=/config/robot
+      - DEMO_MODE=live
+      - DEMO_NAME=montoldre_robufast
+      - ROBOT_NAMESPACE=robot
+      - ROS_LOG_DIR=data/montoldre_robufast/log
 
 
 services:
@@ -59,7 +67,7 @@ services:
   rviz:  # start evaluation nodes and publish information for rviz
     <<: [*base]
     profiles: [optional]
-    command: rviz2 -d /config/default.rviz
+    command: rviz2 -d $$CONFIG_DIR/default.rviz
 
   record:
     <<: [*base]
@@ -70,5 +78,5 @@ services:
         demo_config_directory:=$$CONFIG_DIR
         robot_config_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
-        demo:=$$DEMO_NAME
         mode:=$$DEMO_MODE
+        demo:=$$DEMO_NAME
