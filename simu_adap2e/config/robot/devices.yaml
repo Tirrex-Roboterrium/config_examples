@@ -13,10 +13,10 @@ xsens:
 # perception
 lms_front:
   type: lidar
-  available_mode: none
+  available_mode: all
 lms_back:
   type: lidar
-  available_mode: none
+  available_mode: all
 
 ur10:
   type: arm
