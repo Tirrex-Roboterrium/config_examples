@@ -10,9 +10,9 @@ x-yaml-anchors:  # create anchors "&something" that can be referenced using "*so
       - CONFIG_DIR=/config
       - ROBOT_CONFIG_DIR=/config/robot
       - DEMO_MODE=simulation_gazebo_classic
-      - DEMO_NAME=simu_workshop
+      - DEMO_NAME=simu_pom
       - ROBOT_NAMESPACE=robot
-      - ROS_LOG_DIR=data/simu_workshop/log
+      - ROS_LOG_DIR=data/simu_pom/log
 
 
 services:
@@ -49,7 +49,7 @@ services:
         robot_config_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
-        trajectory_filename:=loop_pixel.traj
+        trajectory_filename:=test01.traj
 
   path_recorder:  # record a trajectory file from the current localization
     <<: [*base]
