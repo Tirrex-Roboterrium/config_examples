@@ -1,3 +1,17 @@
-# montoldre
-world_package: gazebo
-world_name: farm.world
+simulators:
+  gazebo_classic:
+    world_package: romea_simulation_gazebo_worlds
+    world_name: friction_cone.world
+  gazebo:
+    world_package: romea_simulation_gazebo_worlds
+    world_name: gz_empty.sdf
+entities:
+  - name: robot
+    # initial_xyz: [0.0 0.0 0.0] # meters
+    initial_x: 0.0 # meters
+    initial_y: 0.0 # meters
+    initial_z: 0.0 # meters
+    # initial_rpy: [0.0 0.0 0.0] # degrees
+    initial_roll: 0.0 # degrees
+    initial_pitch: 0.0 # degrees
+    initial_yaw: 0.0 # degrees

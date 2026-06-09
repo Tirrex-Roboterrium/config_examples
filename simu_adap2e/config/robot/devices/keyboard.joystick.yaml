@@ -1,0 +1,13 @@
+name: "joystick"
+launch:
+  - include:
+      file: "$(find-pkg-share romea_joystick_meta_bringup)/profile/pynput_teleop.launch.py"
+      arg:
+        - name: uinput-keyboard # look for event-kbd with `ll /dev/input/by-path/`
+          value: /dev/input/by-path/pci-0000:00:14.0-usb-0:9.3.2:1.0-event-kbd
+configuration:
+  manufacturer: any
+  model: keyboard
+  rate: 10
+records:
+  joy: true
