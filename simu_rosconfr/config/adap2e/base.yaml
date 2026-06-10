@@ -1,0 +1,26 @@
+name: "base"
+launch:
+  - include:
+      file: "$(find-pkg-share romea_mobile_base_meta_bringup)/profile/robot.launch.py"
+      arg:
+        - name: "joystick_topic"
+          value: "$(var joystick_topic)"
+        - name: "joystick_configuration_file_path"
+          value: "$(var joystick_configuration_file_path)"
+  - include:
+      file: "$(find-pkg-share romea_mobile_base_meta_bringup)/profile/localisation_plugin.launch.py"
+
+configuration:
+  manufacturer: inrae
+  model: adap2e
+  version: one
+
+records:
+  joint_states: true
+  controller/odom: true
+  controller/odometry: true
+  controller/kinematic: true
+
+simulation:
+  initial_xyz: [10.0, -13.96, 0.0]
+  initial_rpy: [0.0, 0.0, 36.09]
