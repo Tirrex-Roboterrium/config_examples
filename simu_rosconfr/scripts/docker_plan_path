@@ -1,0 +1,5 @@
+#!/bin/bash
+# execute plant_path in the tirrex container
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec docker compose run --rm -it bash "$script_dir/plan_path"
