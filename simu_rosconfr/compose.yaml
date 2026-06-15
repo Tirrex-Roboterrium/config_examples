@@ -49,7 +49,7 @@ services:
         robot_configuration_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
-        path:=weeding.traj
+        path:=weeding_v4.traj
 
   path_recorder:  # record a trajectory file from the current localization
     <<: *base

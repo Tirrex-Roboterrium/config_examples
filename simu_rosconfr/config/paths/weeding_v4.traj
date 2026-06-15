@@ -1,0 +1,117 @@
+{
+  "version": "4",
+  "file_type": "mission_order",
+  "origin": {
+    "type": "WGS84",
+    "coordinates": {
+      "lat": 46.339159,
+      "lon": 3.433923,
+      "alt": 278.142
+    }
+  },
+  "robot": {
+    "name": "adap2e",
+    "width": 1.0,
+    "tool_width": 1.0,
+    "min_curve_radius": 2.499999475000106,
+    "max_diff_curve": 0.4
+  },
+  "points": [
+    {
+      "segment_type": "row_line",
+      "columns": [
+        "x",
+        "y",
+        "working_zone"
+      ],
+      "values": [
+        [
+          9.160943357940914,
+          -15.066305671411937,
+          1
+        ],
+        [
+          39.73672026145063,
+          7.226910039803773,
+          1
+        ]
+      ]
+    },
+    {
+      "segment_type": "turn_segment",
+      "turn_type": "DubinsCC",
+      "columns": [
+        "x",
+        "y"
+      ],
+      "values": [
+        [
+          39.73672026145063,
+          7.226910039803773
+        ],
+        [
+          40.43377291531058,
+          11.447883576530502
+        ]
+      ]
+    },
+    {
+      "segment_type": "row_line",
+      "columns": [
+        "x",
+        "y",
+        "working_zone"
+      ],
+      "values": [
+        [
+          40.43377291531058,
+          11.447883576530502,
+          1
+        ],
+        [
+          13.768851197133529,
+          -7.993874311157594,
+          1
+        ]
+      ]
+    },
+    {
+      "segment_type": "turn_segment",
+      "turn_type": "DubinsCC",
+      "columns": [
+        "x",
+        "y"
+      ],
+      "values": [
+        [
+          13.688046768459524,
+          -8.052853214052657
+        ],
+        [
+          9.569251450883511,
+          -7.343116867013877
+        ]
+      ]
+    },
+    {
+      "segment_type": "row_line",
+      "columns": [
+        "x",
+        "y",
+        "working_zone"
+      ],
+      "values": [
+        [
+          9.577334869327498,
+          -7.337223053840486,
+          1
+        ],
+        [
+          40.2823962417739,
+          15.050255725921646,
+          1
+        ]
+      ]
+    }
+  ]
+}
