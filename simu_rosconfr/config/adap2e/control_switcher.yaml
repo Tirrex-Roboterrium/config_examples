@@ -19,5 +19,5 @@
     implement_inverted: true
 
     cmd_output:
-      message_type: romea_mobile_base_msgs/OneAxleSteeringCommand
+      message_type: romea_mobile_base_msgs/TwoAxleSteeringCommand
       priority: 10
