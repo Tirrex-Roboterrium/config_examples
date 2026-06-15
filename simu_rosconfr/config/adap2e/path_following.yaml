@@ -21,11 +21,11 @@ longitudinal_control:
     minimal_linear_speed: 0.3
 
   curvature_transition:
-    minimal_linear_speed: 0.3  # (unit: m/s) minimal speed sent by the command
-    lateral_error_max: 0.20    # (unit: m) maximal admissible error on Y axis 
-    settling_time: 1.0         # (unit: s) settling time on angular speed
-    settling_distance: 5.0     # (unit: m) settling distance for lateral deviation
-    convergence_ratio: 10.0    # (unit: -) ratio between lateral and angular dynamics (>3)
+    minimal_linear_speed: 0.3 # (unit: m/s) minimal speed sent by the command
+    lateral_error_max: 0.20 # (unit: m) maximal admissible error on Y axis
+    settling_time: 1.0 # (unit: s) settling time on angular speed
+    settling_distance: 5.0 # (unit: m) settling distance for lateral deviation
+    convergence_ratio: 10.0 # (unit: -) ratio between lateral and angular dynamics (>3)
 
 # configuration for classic and predictive lateral control laws
 lateral_control:
@@ -80,5 +80,5 @@ sliding_observer:
 # configuration for cmd_mux auto connection
 cmd_output:
   message_type: romea_mobile_base_msgs/TwoAxleSteeringCommand
-  priority: 10
+  priority: -1
   rate: 10.

@@ -51,6 +51,15 @@ services:
         mode:=$$DEMO_MODE
         path:=weeding_v4.traj
 
+  switcher:  # state machine to select robot control algorithm based on various events
+    <<: [*base]
+    depends_on: [path_following]
+    command: >-
+      ros2 launch romea_control_switcher switcher.launch.py
+        config_file:=$$ROBOT_CONFIG_DIR/control_switcher.yaml
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+
   path_recorder:  # record a trajectory file from the current localization
     <<: *base
     depends_on: [localisation]
