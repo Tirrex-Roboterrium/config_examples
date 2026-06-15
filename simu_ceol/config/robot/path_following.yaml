@@ -1,6 +1,6 @@
 sampling_period: 0.1
 
-stop_at_the_end: true
+stop_at_the_end: false
 enable_joystick: true
 autoconfigure: true
 autostart: true

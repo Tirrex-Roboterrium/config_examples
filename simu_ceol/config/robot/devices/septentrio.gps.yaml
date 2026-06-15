@@ -1,28 +1,38 @@
-name: "gps"
-driver:
-  package: romea_gps_driver
-  executable: tcp_client_node
-  parameters:
-    ip: 192.168.0.50
-    nmea_port: 1001
-    rtcm_port: 1002
-ntrip:
-  package: ntrip_client
-  executable: ntrip_ros.py
-  parameters:
-    host: caster.centipede.fr
-    port: 2101
-    username: centipede
-    password: centipede
-    mountpoint: PHAC
+name: gps
+launch:
+  # - group:
+  #   children:
+  #       - include:
+  #           file: "$(find-pkg-share romea_gps_meta_bringup)/profile/romea_gps_serial_driver.launch.py"
+  #           arg:
+  #             - name: device
+  #               value: /dev/ttyUSB0
+  #             - name: baudrate
+  #               value: "115200"
+  #       - include:
+  #           file: $(find-pkg-share romea_gps_meta_bringup)/profile/ntrip_client.launch.py
+  #           arg:
+  #             - name: mountpoint
+  #               value: PHAC
+  #   if: $(eval "'$(var mode)' == 'live'")
+  - include:
+      file: "$(find-pkg-share romea_gps_meta_bringup)/profile/localisation_plugin.launch.py"
+      arg:
+        - name: wgs84_anchor_file_path
+          value: $(var wgs84_anchor_file_path)
+        - name: odom_topic
+          value: /$(var robot_namespace)/base/controller/odom
+  - include:
+      file: $(find-pkg-share romea_gps_meta_bringup)/profile/gz_bridge.launch.py
+      if: $(eval "'$(var mode)' == 'simulation_gazebo'")
 configuration:
-  type: drotek
-  model: f9p
+  manufacturer: septentrio
+  model: asterx
   rate: 10
   dual_antenna: true
-geometry:
+location:
   parent_link: "base_link"
-  xyz: [-0.36, 0.36, 1.0]
+  xyz: [0.0, 0.0, 1.892610]
 records:
   nmea_sentence: true
   gps_fix: false
