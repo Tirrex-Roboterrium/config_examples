@@ -3,6 +3,10 @@ remote_controller:
   type: joystick
   available_mode: all
 
+# keyboard:
+#   type: joystick
+#   available_mode: all
+
 # sensors
 septentrio:
   type: gps
@@ -10,8 +14,11 @@ septentrio:
 xsens:
   type: imu
   available_mode: all
+mrs1000:
+  type: lidar
+  available_mode: none
 
 # implements
 cultivator:
   type: implement
-  available_mode: all
+  available_mode: none

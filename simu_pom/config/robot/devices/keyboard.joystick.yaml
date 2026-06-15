@@ -1,0 +1,10 @@
+name: "joystick"
+launch:
+  - include:
+      file: "$(find-pkg-share romea_joystick_meta_bringup)/profile/pynput_teleop.launch.py"
+configuration:
+  manufacturer: any
+  model: keyboard
+  rate: 10
+records:
+  joy: true

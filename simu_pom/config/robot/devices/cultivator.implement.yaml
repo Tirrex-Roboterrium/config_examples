@@ -12,10 +12,10 @@ control:
       file: config/hitch_controllers.yaml
 configuration:
   type: hitch
-  model: cultivator
+  model: hoe
 geometry:
   parent_link: "base_link"
-  xyz: [-0.7, 0.0, 0.8]
+  xyz: [-1.1, 0.0, 0.8]
   rpy: [0.0, 0.0, 0.0]
 records:
   joint_states: true

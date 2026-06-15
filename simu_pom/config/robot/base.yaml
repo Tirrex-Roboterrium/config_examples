@@ -1,22 +1,26 @@
 name: "base"
+launch:
+  - include:
+      file: "$(find-pkg-share romea_mobile_base_meta_bringup)/profile/robot.launch.py"
+      arg:
+        - name: "joystick_topic"
+          value: "$(var joystick_topic)"
+        - name: "joystick_configuration_file_path"
+          value: "$(var joystick_configuration_file_path)"
+  - include:
+      file: "$(find-pkg-share romea_mobile_base_meta_bringup)/profile/localisation_plugin.launch.py"
+
 configuration:
-  type: alpo
-  model: slim
-# control: not yet implemented
-#   controller_manager:
-#     update_rate: 100
-#     configuration:
-#       pkg: alpo_bringup
-#       file: config/controller_manager.yaml
-#   controller:
-#     configuration:
-#       pkg: alpo_bringup
-#       file: config/mobile_base_controller.yaml
+  manufacturer: sabi-agri
+  model: pom
+  version: 4x4
+
 records:
   joint_states: true
   controller/odom: true
   controller/odometry: true
   controller/kinematic: true
+
 simulation:
-  initial_xyz: [2.5, 0.0, 0.0]
-  initial_rpy: [0.0, 0.0, 0.0]
+  initial_xyz: [10.0, -4.0, 0.0]
+  initial_rpy: [0.0, 0.0, -52.7]
