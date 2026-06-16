@@ -11,7 +11,6 @@ x-yaml-anchors:  # create anchors "&something" that can be referenced using "*so
       - ROBOT_CONFIG_DIR=/config/adap2e
       - DEMO_MODE=simulation_gazebo
       - DEMO_NAME=simu_rosconfr
-      - ROBOT_NAMESPACE=robot
       - ROS_LOG_DIR=data/simu_rosconfr/log
 
 
@@ -22,7 +21,6 @@ services:
       ros2 launch tirrex_core core.launch.py
         demo_configuration_directory:=$$CONFIG_DIR
         robot_configuration_directory:=$$ROBOT_CONFIG_DIR
-        robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
 
   bash:  # open a shell in the tirrex workspace
@@ -37,7 +35,6 @@ services:
       ros2 launch tirrex_core robot_localisation.launch.py
         demo_configuration_directory:=$$CONFIG_DIR
         robot_configuration_directory:=$$ROBOT_CONFIG_DIR
-        robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
 
   path_following:  # control the robot to follow the specified trajectory file
@@ -47,18 +44,17 @@ services:
       ros2 launch tirrex_core robot_path_following.launch.py
         demo_configuration_directory:=$$CONFIG_DIR
         robot_configuration_directory:=$$ROBOT_CONFIG_DIR
-        robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
         path:=weeding_v4.traj
 
-  switcher:  # state machine to select robot control algorithm based on various events
-    <<: [*base]
-    depends_on: [path_following]
-    command: >-
-      ros2 launch romea_control_switcher switcher.launch.py
-        config_file:=$$ROBOT_CONFIG_DIR/control_switcher.yaml
-        robot_namespace:=$$ROBOT_NAMESPACE
-        mode:=$$DEMO_MODE
+  # switcher:  # state machine to select robot control algorithm based on various events
+  #   <<: [*base]
+  #   depends_on: [path_following]
+  #   command: >-
+  #     ros2 launch romea_control_switcher switcher.launch.py
+  #       config_file:=$$ROBOT_CONFIG_DIR/control_switcher.yaml
+  #       robot_namespace:=$$ROBOT_NAMESPACE
+  #       mode:=$$DEMO_MODE
 
   path_recorder:  # record a trajectory file from the current localization
     <<: *base
@@ -68,7 +64,6 @@ services:
       ros2 launch tirrex_core robot_path_recorder.launch.py
         demo_configuration_directory:=$$CONFIG_DIR
         robot_configuration_directory:=$$ROBOT_CONFIG_DIR
-        robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
         path:=$$CONFIG_DIR/paths/recorded.traj
 
@@ -83,8 +78,6 @@ services:
     command: >-
       ros2 launch -d tirrex_core record.launch.py
         demo_configuration_directory:=$$CONFIG_DIR
-        demo_start_timestamp:=manual02
         robot_configuration_directory:=$$ROBOT_CONFIG_DIR
-        robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
         demo:=$$DEMO_NAME
