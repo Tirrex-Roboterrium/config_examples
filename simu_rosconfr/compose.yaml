@@ -81,9 +81,10 @@ services:
     depends_on: [simulator]
     profiles: [optional]
     command: >-
-      ros2 launch tirrex_demo record.launch.py
-        demo_config_directory:=$$CONFIG_DIR
-        robot_config_directory:=$$ROBOT_CONFIG_DIR
+      ros2 launch -d tirrex_core record.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        demo_start_timestamp:=manual02
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
         demo:=$$DEMO_NAME
