@@ -6,7 +6,6 @@ autoconfigure: true
 autostart: true
 debug: true
 
-# control setpoint
 setpoint:
   desired_linear_speed: 1.0
   desired_lateral_deviation: 0.0
@@ -37,15 +36,6 @@ lateral_control:
   selected: classic
   # selected: classic
   # selected: predictive
-  # selected: desbos_generic
-  # selected: desbos_generic_predictive_lmpc
-  # selected: desbos_generic_predictive_hmpc
-
-  skid_backstepping:
-    gains:
-      lateral_kp: -1.0 # (unit: 1/m) negative, proportional, spatial diff. eq.
-      course_kp: -2.0 # (unit: 1/s) negative, proportional, temporal diff. eq., < lateral_kp
-    maximal_target_course_deg: 45. # control the angle to reach the desired lateral deviation
 
   classic:
     gains:
@@ -61,75 +51,31 @@ lateral_control:
       b1: 1.0086
       b2: -0.2801
 
-  desbos_generic: # chained controller, exact linearization
-    gains:
-      kp: 1.0 # positive, (possible value: 1.0)
-      kd: 2.0 # positive, (possible value: 2.0)
-      ks: 1.0 # not used (longitudinal control)
-    # adaptive_gains is not available. It requires a stiffness observer that is not implemented
-    adaptive_gains: false # if true, kp and kd are computed from a stiffness observer
-
-  desbos_generic_predictive_lmpc:
-    gains:
-      kp: -0.25 # must be negative
-      kd: -2.0 # must be negative
-      ks: 1.0 # not used (longitudinal control)
-    prediction: # do not touch these parameters (used to compute the predicted traj)
-      horizon: 10
-      a0: 0.1642
-      a1: 0.1072
-      b1: 1.0086
-      b2: -0.2801
-    alpha: 0.6 # problem: unknown parameter, used to compute reference
-    model_order: 2 # LMPC model order, available: [1, 2]
-    # adaptive_gains is not available. It requires a stiffness observer that is not implemented
-    adaptive_gains: false # if true, kp and kd are computed from a stiffness observer
-
-  # HMPC version of Luc Desbos' generic predictive command is not completely integrated
-  # Reason: missing curve1 and curve2 params (from path matching)
-  desbos_generic_predictive_hmpc:
-    gains:
-      kp: -1.0 # must be negative
-      kd: -8.0 # must be negative
-      ks: 1.0 # not used (longitudinal control)
-    prediction:
-      horizon: 10
-      a0: 0.1642
-      a1: 0.1072
-      b1: 1.0086
-      b2: -0.2801
-    alpha: 0.1 # problem: unknown parameter, used to compute reference
-    # adaptive_gains is not available. It requires a stiffness observer that is not implemented
-    adaptive_gains: true # if true, kp and kd are computed from a stiffness observer
-
 sliding_observer:
-  # selected: none
   selected: none
-  # selected: picard_skid_lyapunov
+  # selected: extended_cinematic
+  # selected: extended_lyapunov
 
-  picard_skid_backstepping: # values are taken from the the Guillaume Picard PhD
+  extended_cinematic:
     gains:
-      lateral_kp: -6.0
-      course_kp: -6.0
-      longitudinal_kp: -8.5
-      longitudinal_ki: 0.0 # integral
-    filter_weights: # the following variable are smoothed using a 1st order Butterworth filter
-      slip_angle: 0.9
-      linear_speed_disturb: 0.9
-      angular_speed_disturb: 0.8
+      lateral_deviation: -4.0
+      course_deviation: -2.0
+    filter_weights:
+      lateral_deviation: 0.9
+      course_deviation: 0.9
+      front_sliding_angle: 0.98
+      rear_sliding_angle: 0.96
 
-  picard_skid_lyapunov: # values are taken from the the Guillaume Picard PhD
+  extended_lyapunov:
     gains:
-      position_x_kp: -5.0
-      position_x_ki: 0.0 # integral
-      position_y_kp: -5.0
-      course_kp: -5.0
-      slip_angle_kp: -3.0
-      linear_speed_disturb_kp: -3.0
-      angular_speed_disturb_kp: -3.0
+      x_deviation: -3.
+      y_deviation: -3.
+      course_deviation: -3.
+      front_sliding_angle: -1.8
+      rear_sliding_angle: -1.22
 
 # configuration for cmd_mux auto connection
 cmd_output:
   message_type: romea_mobile_base_msgs/OneAxleSteeringCommand
-  priority: 10 # if -1, disable registering to cmd_mux
+  priority: 10
   rate: 10.

@@ -1,0 +1,22 @@
+name: "stereo_camera"
+launch:
+  #   - include:
+  #       file: "$(find-pkg-share romea_camera_meta_bringup)/profile/zed-ros2-wrapper.launch.py"
+  #       arg:
+  #         - name: device
+  #           value: /dev/video0
+  - include:
+      file: $(find-pkg-share romea_camera_meta_bringup)/profile/gz_bridge.launch.py
+      if: $(eval "'$(var mode)' == 'simulation_gazebo'")
+configuration:
+  manufacturer: stereolabs
+  model: zed
+  version: "1"
+  resolution: 1280x720
+location:
+  parent_link: "base_link"
+  xyz: [1.42, 0.0, 1.14]
+  rpy: [0.0, 20.0, 0.0]
+records:
+  camera_info: false
+  image_raw: true

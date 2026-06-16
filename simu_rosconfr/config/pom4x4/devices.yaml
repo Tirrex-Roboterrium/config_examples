@@ -14,8 +14,18 @@ septentrio:
 xsens:
   type: imu
   available_mode: all
+
+lms151:
+  type: lidar
+  available_mode: none
 mrs1000:
   type: lidar
+  available_mode: none
+any:
+  type: camera
+  available_mode: none
+zed:
+  type: camera
   available_mode: none
 
 # implements

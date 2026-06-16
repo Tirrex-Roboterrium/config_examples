@@ -1,0 +1,23 @@
+name: "camera"
+namespace: "rear"
+launch:
+  - include:
+      file: "$(find-pkg-share romea_camera_meta_bringup)/profile/usb_cam.launch.py"
+      arg:
+        - name: device
+          value: /dev/video0
+  - include:
+      file: $(find-pkg-share romea_camera_meta_bringup)/profile/gz_bridge.launch.py
+      if: $(eval "'$(var mode)' == 'simulation_gazebo'")
+configuration:
+  manufacturer: axis
+  model: p1346
+  frame_rate: 30 # hz
+  resolution: 1280x720 # width x height
+location:
+  parent_link: "base_link"
+  xyz: [-1.0, 0.0, 2.0] # meters
+  rpy: [0.0, 0.0, 180.0] # degrees
+records:
+  camera_info: false
+  image_raw: true
