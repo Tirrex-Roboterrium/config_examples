@@ -5,6 +5,13 @@ output="../config/paths/weeding_v4.traj"
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 ./gen_path_csv -w 3 -l 30 -c 3 --enter-extra-length 3. -o swaths.csv
+
+#format v2
+# ros2 run romea_path_tools path_from_swaths swaths.csv /tmp/out.traj
+# jq '.origin.coordinates = [46.339159, 3.433923, 278.142]' /tmp/out.traj >/tmp/out2.traj
+# ros2 run romea_path_tools convert -f -r 36.0963 --offset 16.42 -11.63 /tmp/out2.traj "$output"
+
+#format v4
 ros2 run romea_path_tools path_from_swaths --format v4 swaths.csv /tmp/out.traj
 jq '.origin.coordinates = {
   "lat": 46.339159,
