@@ -16,7 +16,7 @@
 
     implement_frame_id: implement_link
     implement_point: [-0.7, 0.0, 0.0]
-    implement_inverted: true
+    implement_inverted: false
 
     cmd_output:
       message_type: romea_mobile_base_msgs/TwoAxleSteeringCommand
