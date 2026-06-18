@@ -1,13 +1,13 @@
-# control
-# remote_controller:
-#   type: joystick
-#   available_mode: all
-
-keyboard:
+## control
+remote_controller:
   type: joystick
   available_mode: all
 
-# sensors
+# keyboard:
+#   type: joystick
+#   available_mode: all
+
+## sensors
 septentrio:
   type: gps
   available_mode: all
@@ -15,7 +15,7 @@ xsens:
   type: imu
   available_mode: all
 
-# implements
+## implements
 cultivator:
   type: implement
   available_mode: all

@@ -11,8 +11,8 @@
   },
   "robot": {
     "width": 1.0,
-    "tool_width": 1.0,
-    "min_curve_radius": 2.499999475000106,
+    "tool_width": 2.9,
+    "min_curve_radius": 1.9999997000000398,
     "max_diff_curve": 0.4
   },
   "points": [
@@ -52,7 +52,7 @@
           11.447883576530502
         ]
       ],
-      "turn_type": "Dubins"
+      "turn_type": "DubinsCC"
     },
     {
       "segment_type": "row_line",
@@ -90,7 +90,7 @@
           -7.337223053840486
         ]
       ],
-      "turn_type": "Dubins"
+      "turn_type": "DubinsCC"
     },
     {
       "segment_type": "row_line",

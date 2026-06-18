@@ -49,7 +49,7 @@ services:
 
   switcher:  # state machine to select robot control algorithm based on various events
     <<: [*base]
-    depends_on: [path_following]
+    # depends_on: [path_following]
     command: >-
       ros2 launch romea_control_switcher switcher.launch.py
         config_file:=$$ROBOT_CONFIG_DIR/control_switcher.yaml

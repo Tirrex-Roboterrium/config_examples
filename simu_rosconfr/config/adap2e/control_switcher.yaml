@@ -2,15 +2,16 @@
   ros__parameters:
     # the statechart filename (without extension) to use in the package romea_control_switcher
     # (in the 'fsm' directory).
-    statechart: path
-    # statechart: path_furrow
-    # statechart: furrow
+    # statechart: path
+    statechart: path_task
 
     # edge_side: side to follow using edge_following for some specific state machine
     edge_side: right
 
+    # autostart: automatically start the state machine
     # enable_marker: if enabled, publish rviz marker
     # marker_frame: frame used for the marker
+    autostart: false
     enable_marker: true
     marker_frame: base_link
 
