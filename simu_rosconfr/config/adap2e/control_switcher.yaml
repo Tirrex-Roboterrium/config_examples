@@ -5,19 +5,25 @@
     # statechart: path
     statechart: path_task
 
-    # edge_side: side to follow using edge_following for some specific state machine
-    edge_side: right
+    # the statechart options available depends on the choosen statechart
+    statechart_options:
+      work_exit_offset: 1.85
+      work_enter_offset: -1.85
+      raise_duration: 4.0
+      lower_duration: 3.0
 
     # autostart: automatically start the state machine
     # enable_marker: if enabled, publish rviz marker
     # marker_frame: frame used for the marker
-    autostart: false
+    autostart: true
+    enable_implement: true
     enable_marker: true
     marker_frame: base_link
 
+    implement_enabled: true
+    implement_inverted: false
     implement_frame_id: implement_link
     implement_point: [-0.7, 0.0, 0.0]
-    implement_inverted: false
 
     cmd_output:
       message_type: romea_mobile_base_msgs/TwoAxleSteeringCommand

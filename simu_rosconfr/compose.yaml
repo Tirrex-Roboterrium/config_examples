@@ -3,12 +3,13 @@ x-yaml-anchors:  # create anchors "&something" that can be referenced using "*so
     extends:
       # TODO: adapt this path if you copy this config
       file: ../../../docker/common.yaml
-      service: x11_base
+      service: x11_gpu
     volumes:
       - ./config:/config
     environment:
       - CONFIG_DIR=/config
       - ROBOT_CONFIG_DIR=/config/adap2e
+      # - ROBOT_CONFIG_DIR=/config/pom4x4
       - DEMO_MODE=simulation_gazebo
       - DEMO_NAME=simu_rosconfr
       - ROS_LOG_DIR=data/simu_rosconfr/log
@@ -49,7 +50,7 @@ services:
 
   switcher:  # state machine to select robot control algorithm based on various events
     <<: [*base]
-    # depends_on: [path_following]
+    depends_on: [path_following]
     command: >-
       ros2 launch romea_control_switcher switcher.launch.py
         config_file:=$$ROBOT_CONFIG_DIR/control_switcher.yaml
