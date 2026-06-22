@@ -3,7 +3,8 @@ x-yaml-anchors:  # create anchors "&something" that can be referenced using "*so
     extends:
       # TODO: adapt this path if you copy this config
       file: ../../../docker/common.yaml
-      service: x11_gpu
+      service: x11_base
+      # service: x11_gpu
     volumes:
       - ./config:/config
     environment:
