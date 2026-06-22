@@ -1,11 +1,11 @@
 ## control
-remote_controller:
-  type: joystick
-  available_mode: all
-
-# keyboard:
+# remote_controller:
 #   type: joystick
 #   available_mode: all
+
+keyboard:
+  type: joystick
+  available_mode: all
 
 ## sensors
 septentrio:
