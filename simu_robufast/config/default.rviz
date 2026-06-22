@@ -8,6 +8,8 @@ Panels:
         - /Status1
         - /odom1
         - /odom1/Shape1
+        - /odom1/Covariance1
+        - /odom1/Covariance1/Position1
       Splitter Ratio: 0.5
     Tree Height: 680
   - Class: rviz_common/Selection
@@ -51,6 +53,8 @@ Visualization Manager:
       Value: true
     - Class: rviz_default_plugins/TF
       Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
         All Enabled: true
@@ -60,7 +64,7 @@ Visualization Manager:
           Value: true
         robot_base_link:
           Value: true
-        robot_front_axle_steering_link:
+        robot_cultivator_link:
           Value: true
         robot_front_left_wheel_spinning_link:
           Value: true
@@ -72,11 +76,13 @@ Visualization Manager:
           Value: true
         robot_gps_link:
           Value: true
+        robot_implement_link:
+          Value: true
         robot_imu_link:
           Value: true
         robot_inertial_link:
           Value: true
-        robot_rear_axle_steering_link:
+        robot_lift_arm_link:
           Value: true
         robot_rear_left_wheel_spinning_link:
           Value: true
@@ -95,8 +101,6 @@ Visualization Manager:
         map:
           robot_base_footprint:
             robot_base_link:
-              robot_front_axle_steering_link:
-                {}
               robot_front_left_wheel_steering_link:
                 robot_front_left_wheel_spinning_link:
                   {}
@@ -109,13 +113,15 @@ Visualization Manager:
                 {}
               robot_inertial_link:
                 {}
-              robot_rear_axle_steering_link:
-                {}
               robot_rear_left_wheel_steering_link:
                 robot_rear_left_wheel_spinning_link:
                   {}
               robot_rear_right_wheel_steering_link:
                 robot_rear_right_wheel_spinning_link:
+                  {}
+            robot_lift_arm_link:
+              robot_implement_link:
+                robot_cultivator_link:
                   {}
       Update Interval: 0
       Value: true
@@ -146,10 +152,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        robot_front_axle_steering_link:
+        robot_cultivator_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         robot_front_left_wheel_spinning_link:
           Alpha: 1
           Show Axes: false
@@ -175,6 +182,10 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        robot_implement_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         robot_imu_link:
           Alpha: 1
           Show Axes: false
@@ -184,7 +195,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        robot_rear_axle_steering_link:
+        robot_lift_arm_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -252,15 +263,15 @@ Visualization Manager:
           Frame: Local
           Offset: 1
           Scale: 1
-          Value: true
+          Value: false
         Position:
           Alpha: 0.30000001192092896
           Color: 204; 51; 204
           Scale: 1
           Value: true
-        Value: true
+        Value: false
       Enabled: true
-      Keep: 100
+      Keep: 150
       Name: odom
       Position Tolerance: 0.10000000149011612
       Shape:
@@ -326,26 +337,21 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz_default_plugins/ThirdPersonFollower
-      Distance: 27.346019744873047
+      Angle: -1.5699989795684814
+      Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Focal Point:
-        X: -1.3031601905822754
-        Y: -0.04485186189413071
-        Z: 2.86102294921875e-06
-      Focal Shape Fixed Size: false
-      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Scale: 42.97101593017578
       Target Frame: <Fixed Frame>
-      Value: ThirdPersonFollower (rviz_default_plugins)
-      Yaw: 3.1504011154174805
+      Value: TopDownOrtho (rviz_default_plugins)
+      X: 4.034035682678223
+      Y: 0.6593674421310425
     Saved:
       - Class: rviz_default_plugins/ThirdPersonFollower
         Distance: 10
@@ -367,6 +373,21 @@ Visualization Manager:
         Target Frame: robot_base_footprint
         Value: ThirdPersonFollower (rviz_default_plugins)
         Yaw: 3.1704020500183105
+      - Angle: -1.5699989795684814
+        Class: rviz_default_plugins/TopDownOrtho
+        Enable Stereo Rendering:
+          Stereo Eye Separation: 0.05999999865889549
+          Stereo Focal Distance: 1
+          Swap Stereo Eyes: false
+          Value: false
+        Invert Z Axis: false
+        Name: TopDownOrtho
+        Near Clip Distance: 0.009999999776482582
+        Scale: 42.97101593017578
+        Target Frame: <Fixed Frame>
+        Value: TopDownOrtho (rviz_default_plugins)
+        X: 3.568958282470703
+        Y: 0.21683812141418457
 Window Geometry:
   Displays:
     collapsed: true
