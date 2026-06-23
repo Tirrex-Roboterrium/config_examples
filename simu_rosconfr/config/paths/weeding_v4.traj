@@ -52,7 +52,7 @@
           11.447883576530502
         ]
       ],
-      "turn_type": "DubinsCC"
+      "turn_type": "Dubins"
     },
     {
       "segment_type": "row_line",
@@ -90,7 +90,7 @@
           -7.337223053840486
         ]
       ],
-      "turn_type": "DubinsCC"
+      "turn_type": "Dubins"
     },
     {
       "segment_type": "row_line",

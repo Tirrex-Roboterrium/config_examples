@@ -12,7 +12,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 # ros2 run romea_path_tools convert -f -r 36.0963 --offset 16.42 -11.63 /tmp/out2.traj "$output"
 
 #format v4
-ros2 run romea_path_tools path_from_swaths --format v4 -t DubinsCC swaths.csv /tmp/out.traj
+ros2 run romea_path_tools path_from_swaths --format v4 -t Dubins swaths.csv /tmp/out.traj
 jq '.origin.coordinates = {
   "lat": 46.339159,
   "lon": 3.433923,
