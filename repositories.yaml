@@ -1,33 +1,10 @@
 repositories:
-  core/romea_path:
+  src/ros2/interfaces/teleoperation/pynput_teleop:
     type: git
-    url: git@forge.inrae.fr:romea_core/romea_path.git
-    version: trajs_v4
-  core/romea_path_matching:
-    type: git
-    url: git@forge.inrae.fr:romea_core/romea_path_matching.git
-    version: main
-  romea_implement:
-    type: git
-    url: git@forge.inrae.fr:romea_ros2/interfaces/implements/romea_implement.git
+    url: git@forge.inrae.fr:tscf/ros2/pynput_teleop.git
     version: jazzy
-  romea_joy:
+
+  src/ros2/interfaces/teleoperation/romea_joy:
     type: git
     url: git@forge.inrae.fr:romea_ros2/interfaces/teleoperation/romea_joy.git
-    version: jazzy
-  romea_mobile_base:
-    type: git
-    url: git@forge.inrae.fr:romea_ros2/interfaces/vehicles/romea_mobile_base.git
-    version: jazzy
-  romea_path_following2:
-    type: git
-    url: git@forge.inrae.fr:romea_ros2/algorithms/control/path_following/romea_path_following2.git
-    version: jazzy
-  romea_path_tools:
-    type: git
-    url: git@forge.inrae.fr:romea_ros2/tools/romea_path_tools.git
-    version: trajs_v4
-  tirrex_demo:
-    type: git
-    url: git@forge.inrae.fr:tirrex/tirrex_demo.git
     version: jazzy
