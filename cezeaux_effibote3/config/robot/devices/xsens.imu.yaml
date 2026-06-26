@@ -1,0 +1,24 @@
+name: imu
+launch:
+  - include:
+      file: $(find-pkg-share romea_imu_meta_bringup)/profile/xsens_driver.launch.py
+      arg:
+        - name: device
+          value: /dev/serial/by-id/usb-FTDI_FT230X_Basic_UART_DK0EAOWB-if00-port0
+        - name: baudrate
+          value: "921600"
+  - include:
+      file: $(find-pkg-share romea_imu_meta_bringup)/profile/localisation_plugin.launch.py
+      arg:
+        - name: odom_topic
+          value: /$(var robot_namespace)/base/controller/odom
+configuration:
+  manufacturer: xsens
+  model: mti
+  rate: 100
+location:
+  parent_link: base_link
+  xyz: [0.0, 0.0, 0.7]
+  rpy: [0.0, 0.0, 0.0]
+records:
+  data: true

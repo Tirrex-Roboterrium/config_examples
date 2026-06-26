@@ -1,0 +1,38 @@
+name: gps
+launch:
+  - group:
+      if: $(eval "'$(var mode)' == 'live'")
+      children:
+        - include:
+            file: $(find-pkg-share romea_gps_meta_bringup)/profile/romea_gps_serial_driver.launch.py
+            arg:
+              - name: device
+                value: /dev/serial/by-id/usb-u-blox_AG_-_www.u-blox.com_u-blox_GNSS_receiver-if00
+              - name: baudrate
+                value: "115200"
+        - include:
+            file: $(find-pkg-share romea_gps_meta_bringup)/profile/ntrip_client.launch.py
+            arg:
+              - name: host
+                value: crtk.net
+              - name: mountpoint
+                value: NEAR
+  - include:
+      file: $(find-pkg-share romea_gps_meta_bringup)/profile/localisation_plugin.launch.py
+      arg:
+        - name: wgs84_anchor_file_path
+          # value: $(var wgs84_anchor_file_path)
+          value: /config/wgs84_anchor.yaml
+        - name: odom_topic
+          value: /$(var robot_namespace)/base/controller/odom
+configuration:
+  manufacturer: septentrio
+  model: asterx
+  rate: 10
+  dual_antenna: false
+location:
+  parent_link: "base_link"
+  xyz: [0.0, 0.0, 1.892610]
+records:
+  nmea_sentence: true
+  fix: false

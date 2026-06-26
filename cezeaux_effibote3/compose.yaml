@@ -1,0 +1,80 @@
+x-yaml-anchors:  # create anchors "&something" that can be referenced using "*something"
+  base: &base
+    extends:
+      file: ../../../docker/common.yaml
+      service: x11_base
+    volumes:
+      - ./config:/config
+    environment:
+      - CONFIG_DIR=/config
+      - ROBOT_CONFIG_DIR=/config/robot
+      - DEMO_MODE=live
+      - DEMO_NAME=cezeaux_effibote3
+      - ROBOT_NAMESPACE=robot
+      - ROS_LOG_DIR=data/cezeaux_effibote3/log
+
+services:
+  robot:
+    <<: *base
+    volumes:
+      - ./config:/config
+      - /dev/serial:/dev/serial:Z
+    privileged: true
+    command: >-
+      ros2 launch tirrex_core core.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
+        mode:=$$DEMO_MODE
+
+  bash:  # open a shell in the tirrex workspace
+    <<: *base
+    profiles: [optional]
+    command: bash
+
+  localisation:  # compute absolute localization using GNSS, IMU and odometry measurements
+    <<: *base
+    depends_on: [robot]
+    command: >-
+      ros2 launch tirrex_core robot_localisation.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+
+  path_following:  # control the robot to follow the specified trajectory file
+    <<: *base
+    depends_on: [localisation]
+    command: >-
+      ros2 launch tirrex_core robot_path_following.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+        path:=recorded.traj
+
+  path_recorder:  # record a trajectory file from the current localization
+    <<: *base
+    depends_on: [localisation]
+    profiles: [optional]
+    command: >-
+      ros2 launch tirrex_core robot_path_recorder.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+        trajectory_filename:=$$CONFIG_DIR/paths/recorded.traj
+
+  rviz:  # start evaluation nodes and publish information for rviz
+    <<: *base
+    command: rviz2 -d $$CONFIG_DIR/default.rviz
+
+  record:
+    <<: *base
+    depends_on: [robot]
+    profiles: [optional]
+    command: >-
+      ros2 launch -d tirrex_core record.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
+        mode:=$$DEMO_MODE
+        demo:=$$DEMO_NAME
