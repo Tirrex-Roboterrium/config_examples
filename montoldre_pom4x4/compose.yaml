@@ -1,0 +1,106 @@
+x-yaml-anchors:  # create anchors "&something" that can be referenced using "*something"
+  base: &base
+    extends:
+      # TODO: adapt this path if you copy this config
+      file: ../../../docker/common.yaml
+      service: x11_robot
+    volumes:
+      - ./config:/config
+    environment:
+      - CONFIG_DIR=/config
+      - ROBOT_CONFIG_DIR=/config/robot
+      - DEMO_MODE=live
+      - DEMO_NAME=montoldre_pom4x4
+      - ROBOT_NAMESPACE=robot
+      - ROS_LOG_DIR=data/montoldre_pom4x4/log
+
+  env-robot: &env-robot
+    volumes:
+      - ./config:/config
+    environment:
+      - ROS_IP=192.168.100.2
+      - ROS_MASTER_URI=http://192.168.100.1:11311
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///config/cyclonedds.xml
+    network_mode: host
+    dns:
+      # Manually specifying the robot DNS prevents docker from using local DNS server such as
+      # systemd-resolved, which causes problems when resolving local domains (like alpo.local)
+      - 192.168.0.10
+      - 1.1.1.1
+
+services:
+  bridge:
+    <<: [*env-robot]
+    image: ghcr.io/romea/alpo:jazzy
+    command: >-
+      ros2 run alpo_bridge alpo_bridge 
+        --ros-args 
+        -r __ns:=/robot/base
+        -p override_ros1_master:=false
+
+  robot:
+    <<: [*base]
+    depends_on: [bridge]
+    command: >-
+      ros2 launch tirrex_core core.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_config_directory:=$$ROBOT_CONFIG_DIR
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+
+  bash:  # open a shell in the tirrex workspace
+    <<: [*base]
+    profiles: [optional]
+    command: bash
+
+  localisation:  # compute absolute localization using GNSS, IMU and odometry measurements
+    <<: [*base]
+    depends_on: [robot]
+    command: >-
+      ros2 launch tirrex_core robot_localisation.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+
+  path_following:  # control the robot to follow the specified trajectory file
+    <<: [*base]
+    depends_on: [localisation]
+    profiles: [optional]
+    command: >-
+      ros2 launch tirrex_core robot_path_following.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+        path:=output_path.traj
+
+  path_recorder:  # record a trajectory file from the current localization
+    <<: [*base]
+    depends_on: [localisation]
+    profiles: [optional]
+    command: >-
+      ros2 launch tirrex_core robot_path_recorder.launch.py
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+        trajectory_filename:=$$CONFIG_DIR/paths/recorded.traj
+
+  rviz:  # start evaluation nodes and publish information for rviz
+    <<: [*base]
+    profiles: [optional]
+    command: rviz2 -d $$CONFIG_DIR/default.rviz
+
+  record:
+    <<: [*base]
+    depends_on: [robot]
+    profiles: [optional]
+    command: >-
+      ros2 launch tirrex_core record.launch.py
+        demo_config_directory:=$$CONFIG_DIR
+        robot_config_directory:=$$ROBOT_CONFIG_DIR
+        robot_namespace:=$$ROBOT_NAMESPACE
+        mode:=$$DEMO_MODE
+        demo:=$$DEMO_NAME
