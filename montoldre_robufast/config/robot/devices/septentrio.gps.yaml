@@ -1,30 +1,43 @@
 name: gps
-driver:
-  package: romea_gps_driver
-  executable: tcp_client_node
-  parameters:
-    ip: 192.168.3.1  # no ethernet cable
-    nmea_port: 1001
-    rtcm_port: 1002
-ntrip:
-  package: ntrip_client
-  executable: ntrip_ros.py
-  parameters:
-    host: crtk.net
-    port: 2101
-    username: centipede
-    password: centipede
-    mountpoint: MTLDR
-    # mountpoint: CVIC  # use this one if MTLDR is down
+launch:
+  - group:
+      if: $(eval "'$(var mode)' == 'live'")
+      children:
+        - include:
+            file: "$(find-pkg-share romea_gps_meta_bringup)/profile/romea_gps_tcp_driver.launch.py"
+            arg:
+              - name: ip
+                value: 192.168.3.1
+              - name: nmea_port
+                value: "1001"
+              - name: rtcm_port
+                value: "1002"
+        - include:
+            file: $(find-pkg-share romea_gps_meta_bringup)/profile/ntrip_client.launch.py
+            arg:
+              - name: host
+                value: crtk.net
+              - name: mountpoint
+                value: MTLDR
+  - include:
+      file: "$(find-pkg-share romea_gps_meta_bringup)/profile/localisation_plugin.launch.py"
+      arg:
+        - name: wgs84_anchor_file_path
+          # value: $(var wgs84_anchor_file_path)
+          value: /config/wgs84_anchor.yaml
+        - name: odom_topic
+          value: /$(var robot_namespace)/base/controller/odom
+  - include:
+      file: $(find-pkg-share romea_gps_meta_bringup)/profile/gz_bridge.launch.py
+      if: $(eval "'$(var mode)' == 'simulation_gazebo'")
 configuration:
-  type: drotek
-  model: f9p
+  manufacturer: septentrio
+  model: asterx
   rate: 10
-  dual_antenna: false  # only 1 antenna
-geometry:
+  dual_antenna: false
+location:
   parent_link: "base_link"
   xyz: [-0.1125, -0.3, 1.11]  # calibrated by Guillaume
 records:
   nmea_sentence: true
-  gps_fix: false
-  vel: false
+  fix: false

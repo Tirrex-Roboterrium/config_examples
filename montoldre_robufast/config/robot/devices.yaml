@@ -1,13 +1,17 @@
+# control
 remote_controller:
   type: joystick
   available_mode: all
 
-lms151:
-  type: lidar
-  available_mode: none
+# keyboard:
+#   type: joystick
+#   available_mode: all
+
+# sensors
 septentrio:
   type: gps
   available_mode: all
+
 xsens:
   type: imu
   available_mode: all
