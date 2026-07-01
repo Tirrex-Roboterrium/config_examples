@@ -69,7 +69,7 @@ services:
         robot_config_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
-        trajectory_filename:=test01.traj
+        path:=test01.traj
 
   path_recorder:  # record a trajectory file from the current localization
     <<: [*base]
@@ -81,7 +81,7 @@ services:
         robot_config_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
-        trajectory_filename:=$$CONFIG_DIR/paths/recorded.traj
+        path:=$$CONFIG_DIR/paths/recorded.traj
 
   rviz:  # start evaluation nodes and publish information for rviz
     <<: [*base]

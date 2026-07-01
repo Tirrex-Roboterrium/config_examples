@@ -20,7 +20,7 @@ services:
     command: >-
       ros2 launch tirrex_core core.launch.py
         demo_configuration_directory:=$$CONFIG_DIR
-        robot_config_directory:=$$ROBOT_CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
 
@@ -50,6 +50,7 @@ services:
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
         path:=robu1.traj
+    # original traj name: recorded.traj
 
   path_recorder:  # record a trajectory file from the current localization
     <<: [*base]
@@ -61,7 +62,7 @@ services:
         robot_configuration_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
-        trajectory_filename:=$$CONFIG_DIR/paths/recorded.traj
+        path:=$$CONFIG_DIR/paths/recorded.traj
 
   rviz:  # start evaluation nodes and publish information for rviz
     <<: [*base]
@@ -74,8 +75,8 @@ services:
     profiles: [optional]
     command: >-
       ros2 launch tirrex_core record.launch.py
-        demo_config_directory:=$$CONFIG_DIR
-        robot_config_directory:=$$ROBOT_CONFIG_DIR
+        demo_configuration_directory:=$$CONFIG_DIR
+        robot_configuration_directory:=$$ROBOT_CONFIG_DIR
         robot_namespace:=$$ROBOT_NAMESPACE
         mode:=$$DEMO_MODE
         demo:=$$DEMO_NAME

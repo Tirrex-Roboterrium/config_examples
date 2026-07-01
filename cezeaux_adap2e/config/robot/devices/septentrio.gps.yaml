@@ -1,7 +1,6 @@
 name: gps
 launch:
   - group:
-      if: $(eval "'$(var mode)' == 'live'")
       children:
         - include:
             file: "$(find-pkg-share romea_gps_meta_bringup)/profile/romea_gps_tcp_driver.launch.py"
@@ -18,7 +17,7 @@ launch:
               - name: host
                 value: crtk.net
               - name: mountpoint
-                value: PHAC
+                value: NEAR
   - include:
       file: "$(find-pkg-share romea_gps_meta_bringup)/profile/localisation_plugin.launch.py"
       arg:
@@ -27,9 +26,6 @@ launch:
           value: /config/wgs84_anchor.yaml
         - name: odom_topic
           value: /$(var robot_namespace)/base/controller/odom
-  - include:
-      file: $(find-pkg-share romea_gps_meta_bringup)/profile/gz_bridge.launch.py
-      if: $(eval "'$(var mode)' == 'simulation_gazebo'")
 configuration:
   manufacturer: septentrio
   model: asterx
