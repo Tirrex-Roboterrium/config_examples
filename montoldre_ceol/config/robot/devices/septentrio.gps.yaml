@@ -1,0 +1,43 @@
+name: gps
+launch:
+  - group:
+      if: $(eval "'$(var mode)' == 'live'")
+      children:
+        - include:
+            file: "$(find-pkg-share romea_gps_meta_bringup)/profile/romea_gps_tcp_driver.launch.py"
+            arg:
+              - name: ip
+                value: 192.168.0.50
+              - name: nmea_port
+                value: "1001"
+              - name: rtcm_port
+                value: "1002"
+        - include:
+            file: $(find-pkg-share romea_gps_meta_bringup)/profile/ntrip_client.launch.py
+            arg:
+              - name: host
+                value: crtk.net
+              - name: mountpoint
+                value: NEAR
+  - include:
+      file: "$(find-pkg-share romea_gps_meta_bringup)/profile/localisation_plugin.launch.py"
+      arg:
+        - name: wgs84_anchor_file_path
+          # value: $(var wgs84_anchor_file_path)
+          value: /config/wgs84_anchor.yaml
+        - name: odom_topic
+          value: /$(var robot_namespace)/base/controller/odom
+  - include:
+      file: $(find-pkg-share romea_gps_meta_bringup)/profile/gz_bridge.launch.py
+      if: $(eval "'$(var mode)' == 'simulation_gazebo'")
+configuration:
+  manufacturer: septentrio
+  model: asterx
+  rate: 10
+  dual_antenna: true
+location:
+  parent_link: "base_link"
+  xyz: [-0.36, 0.36, 1.0]
+records:
+  nmea_sentence: true
+  fix: false
