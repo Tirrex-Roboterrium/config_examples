@@ -19,3 +19,8 @@ xsens:
 cultivator:
   type: implement
   available_mode: all
+
+# arms
+ur10:
+  type: arm
+  available_mode: simulation
