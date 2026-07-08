@@ -1,7 +1,7 @@
 x-yaml-anchors:  # create anchors "&something" that can be referenced using "*something"
   base: &base
     extends:
-      file: ../../../docker/common.yaml
+      file: ${WORKSPACE}/docker/common.yaml
       service: x11_base
     volumes:
       - ./config:/config
