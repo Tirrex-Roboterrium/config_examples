@@ -23,30 +23,15 @@ A demo directory contains the following files:
 ## How to create your own demo
 
 The easiest way to create your own demo directory is to copy one of the directory defined in this
-project and put them outside of this repos (in the `demos` directory).
-After copying the desired demo, edit the `compose.yaml` file to adapt the value of `file:`.
-This value corresponds to the relative path of `docker/full.yaml` (when `TIRREX_IMAGE_TAG == full`)
-from your demo directory.
-There is also other variables that may contain information specific to the demo like `DEMO_NAME` or
-`ROS_LOG_DIR`.
-For example, if I copy `demos/examples/simu_adap2e` to create `demos/my_simu`, the begining of
-`compose.yaml` should look like this:
-```yaml
-x-yaml-anchors:
-  base: &base
-    extends:
-      file: ../../docker/${TIRREX_IMAGE_TAG}.yaml  # the difference is '../../' instead of '../../../'
-      service: x11_base
-    volumes:
-      - ./config:/config
-    environment:
-      - CONFIG_DIR=/config
-      - ROBOT_CONFIG_DIR=/config/robot
-      - DEMO_MODE=simulation_gazebo_classic
-      - DEMO_NAME=my_simu                    # this name should be the name of the directory
-      - ROBOT_NAMESPACE=robot
-      - ROS_LOG_DIR=data/my_simu/log         # the name of the directory also appears here
-```
+project and put them outside of this repos (in the `demos` directory but not `demos/examples`).
 
-After that, the demo will run correctly.
-You can then edit the configuration to make your own version of the copied demo.
+In each demo directory, there is a hidden `.env` file that corresponds to a symbolic link to the
+`.env` at the root of the workspace.
+It contains some environment variables required by the docker compose configuration.
+Because you have created a new directory, you have to update the path of `.env` to correctly point
+to the `.env` at the root of the workspace.
+For example, if you directly put your demo directory into `demos`, the path should be `../../.env`.
+From your demo direcotry, execute
+```
+ln -sfr ../../.env .
+```
