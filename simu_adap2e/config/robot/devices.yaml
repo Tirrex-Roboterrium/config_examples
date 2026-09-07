@@ -14,6 +14,9 @@ septentrio:
 xsens:
   type: imu
   available_mode: all
+lms_front:
+  type: lidar
+  available_mode: all
 
 # implements
 cultivator:

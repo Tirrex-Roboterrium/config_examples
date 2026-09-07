@@ -1,18 +1,24 @@
 name: lidar_front
-driver:
-  package: sick_scan_xd
-  executable: sick_generic_caller
-  parameters:
-    hostname: 192.168.0.21
-    port: "2112"
+launch:
+  - include:
+      file: "$(find-pkg-share romea_lidar_meta_bringup)/profile/sick_scan_xd_lms1xx.launch.py"
+      arg:
+        - name: ip
+          value: "192.168.0.21"
+        - name: port
+          value: "2112"
+  - include:
+      file: $(find-pkg-share romea_lidar_meta_bringup)/profile/gz_bridge.launch.py
+      if: $(eval "'$(var mode)' == 'simulation_gazebo'")
 configuration:
-  type: sick
-  model: lms151
+  manufacturer: sick
+  model: lms
+  version: 151
   rate: 50
   resolution: 0.5
-geometry:
+location:
   parent_link: base_link
-  xyz: [2.5, 0.0, 0.388]
+  xyz: [2.1, 0.0, 0.388]
   rpy: [0.0, 46.8, 0.0]
 records:
   scan: true
