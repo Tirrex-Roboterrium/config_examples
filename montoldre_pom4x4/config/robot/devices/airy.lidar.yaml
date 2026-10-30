@@ -1,0 +1,25 @@
+name: lidar
+launch:
+  - include:
+      file: "$(find-pkg-share romea_lidar_meta_bringup)/profile/rslidar_sdk.launch.py"
+      arg:
+        - name: frame_id
+          value: "robot_lidar_link"
+        - name: lidar_name
+          value: "lidar"
+  - include:
+      file: $(find-pkg-share romea_lidar_meta_bringup)/profile/gz_bridge.launch.py
+      if: $(eval "'$(var mode)' == 'simulation_gazebo'")
+configuration:
+  manufacturer: robosense
+  model: airy
+  version: 96
+  rate: 10
+  # horizontal_resolution: 2048
+  # vertical_resolution: 32
+location:
+  parent_link: "base_link"
+  xyz: [2.95, 0.0, 0.52]
+  rpy: [0.0, 32.0, 0.0]
+records:
+  cloud: true
