@@ -18,11 +18,6 @@ lms_front:
   type: lidar
   available_mode: all
 
-# implements
-cultivator:
-  type: implement
-  available_mode: all
-
 # arms
 ur10:
   type: arm
